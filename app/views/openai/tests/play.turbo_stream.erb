@@ -1,0 +1,11 @@
+<%= turbo_stream.replace "result" do %>
+  <div id="result">
+    <h1>生成された回答</h1>
+    <p><%= @result[:generated_text] %></p>
+    <h1>結果</h1>
+    <h2><%= @result[:message] %></h2>
+    <p>質問文の長さによる点数: <%= @result[:length_score]%> / 100</p>
+    <p>お題との関連性による点数: <%= @result[:relevance_score].to_f.round %> / 100</p>
+    <p>合計点数: <%= @result[:total_score].to_f.round %></p>
+  </div>
+<% end %>
