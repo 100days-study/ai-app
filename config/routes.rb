@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root "openai/tests#index"
+  root "homes#index"
+  get "openai/tests", to: "openai/tests#index"
   post "play_game", to: "openai/tests#play"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

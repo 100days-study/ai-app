@@ -3,7 +3,7 @@
   <p><%= @result[:generated_text] %></p>
   <h1>結果</h1>
   <h2><%= @result[:message] %></h2>
-  <p>質問文の長さによる点数: <%= @result[:length_score]%> / 100</p>
-  <p>お題との関連性による点数: <%= @result[:relevance_score].to_f.round %> / 100</p>
-  <p>合計点数: <%= @result[:total_score].to_f.round %></p>
+  <p>質問文の長さ: <%= @result[:length_score]%> / 100点</p>
+  <p>お題との関連性: <%= @result[:relevance_score].to_f.round %> / 100点</p>
+  <p>合計点数: <%= @result[:total_score].to_f.round %> 点</p>
 </div>

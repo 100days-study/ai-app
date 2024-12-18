@@ -22,25 +22,10 @@ class Openai::TestsController < ApplicationController
     # OpenAIに質問を投げてレスポンスを取得
     generated_text = ask_openai(user_question)
 
-    # もし生成されたテキストがnilであれば、エラーメッセージを返す
-    if generated_text.nil?
-      return {
-        win: false,
-        message: "OpenAIのリクエストに失敗しました。",
-        length_score: length_score,
-        relevance_score: 0,
-        total_score: length_score
-      }
-    end
-
     # お題との関連性のスコアを計算（関連性が高いほど低点）
     relevance_score = calculate_relevance(generated_text, target_word, user_question)
     puts "relevance_score"
     puts relevance_score
-
-    # 関連性が高くなるほど点数が低くなる
-    # relevance_score = 100 - relevance_score
-    # puts relevance_score
 
     # 合計点数
     total_score = length_score + relevance_score
@@ -70,11 +55,13 @@ class Openai::TestsController < ApplicationController
 
   def ask_openai(user_question)
     client = OpenAI::Client.new
+    prompt = "自然な話し言葉で返答してください。質問: #{user_question}"
+
     response = client.chat(
       parameters: {
         model: "gpt-3.5-turbo",  # 使用するモデルを指定
-        messages: [ { role: "user", content: user_question } ],  # チャット形式でメッセージを送信
-        max_tokens: 100,  # 最大トークン数を指定
+        messages: [ { role: "user", content: prompt } ],  # チャット形式でメッセージを送信
+        max_tokens: 150,  # 最大トークン数を指定
         temperature: 0.7  # 創造性の度合い
       }
     )
