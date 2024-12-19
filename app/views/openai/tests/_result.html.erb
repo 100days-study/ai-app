@@ -1,9 +1,12 @@
-<div id="result">
-  <h1>生成された回答</h1>
-  <p><%= @result[:generated_text] %></p>
-  <h1>結果</h1>
-  <h2><%= @result[:message] %></h2>
-  <p>質問文の長さ: <%= @result[:length_score]%> / 100点</p>
-  <p>お題との関連性: <%= @result[:relevance_score].to_f.round %> / 100点</p>
-  <p>合計点数: <%= @result[:total_score].to_f.round %> 点</p>
-</div>
+<div id="result" class="flex flex-col items-center justify-center w-full m-4">
+  <div class="text-center">
+    <h1 class="text-4xl font-bold m-4">生成された回答</h1>
+    <p class="text-xl max-w-xl mx-auto"><%= @result[:generated_text] %></p>
+    <h1 class="text-4xl font-bold m-4">結果</h1>
+    <h2 class="text-2xl"><%= @result[:message] %></h2>
+    <div class="mb-2">
+      <p class=" text-xl">質問文の長さ: <%= @result[:length_score]%> / 100点</p>
+      <p class="text-xl">お題との関連性: <%= @result[:relevance_score].to_f.round %> / 100点</p>
+    </div>
+    <p class="text-3xl">合計点数: <%= @result[:total_score].to_f.round %> 点</p>
+  </div>
