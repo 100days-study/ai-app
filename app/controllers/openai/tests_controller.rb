@@ -23,7 +23,7 @@ class Openai::TestsController < ApplicationController
     generated_text = ask_openai(user_question)
 
     # お題との関連性のスコアを計算（関連性が高いほど低点）
-    relevance_score = calculate_relevance(generated_text, target_word, user_question)
+    relevance_score = calculate_relevance(target_word, user_question)
     puts "relevance_score"
     puts relevance_score
 
@@ -68,21 +68,21 @@ class Openai::TestsController < ApplicationController
     response["choices"][0]["message"]["content"]  # 生成されたテキストを返す
   end
 
-  def calculate_relevance(generated_text, target_word, user_question)
+  def calculate_relevance(target_word, user_question)
     # お題の言葉を直接含む場合はペナルティを適用
     if user_question.include?(target_word)
       return 0  # もしお題を含む場合は、関連性スコアを0にする（ペナルティ）
     end
 
     # Embedding APIを使って生成されたテキストとお題の埋め込みを取得
-    generated_embedding = get_embedding(generated_text)
+    question_embedding = get_embedding(user_question)
     target_embedding = get_embedding(target_word)
 
     # コサイン類似度を計算
-    similarity_score = cosine_similarity(generated_embedding, target_embedding)
+    similarity_score = cosine_similarity(question_embedding, target_embedding)
 
     # 類似度スコアを逆転させて、関連性が高いほど低点となるようにする
-    relevance_score = (1 - similarity_score) * 100  # 1 - 類似度で逆転させてスコアを計算
+    relevance_score = (1 - similarity_score) * 400  # 1 - 類似度で逆転させてスコアを計算
     relevance_score
   end
 
